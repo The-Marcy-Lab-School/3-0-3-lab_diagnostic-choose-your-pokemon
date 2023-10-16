@@ -39,7 +39,7 @@
 # Project overview
 You're going to be building a site that fetches a single pokemon at a time, and then displays information about it. You can also personalize that pokemon a bit with some more information that *you* enter. This project covers the frontend only and deals with DOM manipulation, data fetching, and state management.
 
-In total, it takes about 100 lines of JS and 50 lines of html/css to complete this project. That should be something you can do in two days, and if not, there are plenty of "Check for understanding" questions for you to review. It's time to take your learning into your own hands.
+In total, it takes *about* 100 lines of JS and 60 lines of html/css to complete this project. That should be something you can do in two days, and if not, there are plenty of "Check for understanding" questions for you to review. It's time to take your learning into your own hands.
 
 # Site Demo
 Here's a look at the finished site, in a gif! (We couldn't link you to the site itself because then you'd be able to copy it, and that's cheating!)
@@ -74,7 +74,7 @@ Hey, no problem. Sometimes we have to work on topics and projects we don't care 
 - A user is greeted to the "Bulbasaur" pokemon already loaded
 - A user can select a pokemon's ID and fetch the data
 - **A user can only enter a number from 1-151**
-- A user can see the pokemon's name and first 4 moves (or fewer if the pokemon have that many)
+- A user can see the pokemon's name and first 4 moves (or fewer if the pokemon doesn't have that many)
 - A user can view the "Official Artwork," "Front Sprite," and "Back Sprite" of the pokemon
 - A user can give their pokemon a nickname, an `S, A, B,` or `C` tier rating, and check a box if the sprite is cool
 - The information will be displayed underneath the pokemon's information
@@ -89,13 +89,13 @@ OK, if that's all you need to get started, then get going! In this repo, add all
 You should be deploying! A lot actually! After each step. We're just going to use GitHub pages for this, but that's perfect for a project of this size.
 
 # Project Breakdown
-If you need some help, then follow theses steps, we'll walk you through it. We'll also highlight the skills we're hoping you have at this point.
+If you need some help, follow theses steps, we'll walk you through it. We'll also highlight the skills we're hoping you have at this point.
 
 ## Step 1: Set up your project
 ### Check for understanding
 - Do you know how to create files from the command line?
 - Do you know how to (typically) start a node project?
-- Do you know why we call it an "index.html" for the main page
+- Do you know why we call it an "index.html" for the main page?
 
 **We don't need this today**, but as a reminder, if you were creating a node project from scratch, *typically* you would do:
 
@@ -113,7 +113,7 @@ code .
 # Or whatever your system uses to open up your code editor
 ```
 
-That's pretty much the command line setup for any node project. Now, **you don't actually need any of that because all we're using today is HTML, CSS, and JS**, but it's good to get in the habit of doing this! Today we need no node_modules or anything like that, so we can skip that step.
+That's pretty much the command line setup for any node project. Now, **you don't actually need any of that because all we're using today is HTML, CSS, and JS**, but it's good to get in the habit of doing this! Today we don't need node_modules or anything like that, so we can skip that step.
 
 Instead, all we need today is to make some files in this diagnostic-lab directory:
 
@@ -154,7 +154,7 @@ You can also link a file in the head, but you need to add the `defer` attribute 
   <!-- Rest of head tag -->
 ```
 
-By default, use this one. It's the easiest to understand and it's the most common.
+By default, use this one. It's the easiest to understand.
 
 ### Head with type="module"
 You can also link a file in the head, but you need to add the `type="module"` attribute to the script tag:
@@ -182,9 +182,9 @@ OK, so like I said, if you don't know what the differences are and why it matter
 
 The first part of any project should always be the part you control the least. If you're dealing with a 3rd party API, you should always start by making sure you know how to fetch the data you want.
 
-Why don't you build a fetch handler function that takes in a `url` and `options` (though, again, we won't use any here) and returns the parsed JSON data. If there's an error, it should handle it and then let's just say log it and return `null`.
+Why don't you build a fetch handler function that takes in a `url` and returns the parsed JSON data. If there's an error, it should handle it and then let's just say log it and return `null`.
 
-To test it, try fetching a pokemon id of 12 and 3020130. The former will give you some data to read and the later will give you a 404. Can your function handle both situations?
+To test it, try fetching a pokemon id of 12 and 3020130. The former will give you some data to read and the latter will give you a 404. Can your function handle both situations?
 
 ## Step 4: Data Wrangling
 ### Check for understanding
@@ -192,13 +192,13 @@ To test it, try fetching a pokemon id of 12 and 3020130. The former will give yo
 - Do you know how to save the "shape" of the data you want in your app?
 
 
-Now that you know how to fetch from our API, the *fun* part begins: wrangling your data! As you can see, the API returns a *ton* of information, and we need select few. Here is what your looking for, can you find it in the data?
+Now that you know how to fetch from the API, the *fun* part begins: wrangling your data! As you can see, the API returns a *ton* of information, and we need select only a small part. Here is what your looking for, can you find it in the data?
 
 - Name
   - The name of the pokemon
 - Moves
   - We only need the string names of the first four, how can you find them?
-- images
+- sprites and images
   - Front sprite
     - A "sprite" is just a pixel image, and there's a front view we need
   - Back sprite
@@ -206,7 +206,7 @@ Now that you know how to fetch from our API, the *fun* part begins: wrangling yo
   - Official artwork
     - I'll give you a tiny hint here: the property name is buried somewhere and called `artwork-official`
 
-There's more data that we'll add, but when it comes to the API, that's all we need. So, can you find that information? Of course, if you would like to use more, feel free, but first make sure to do the minimum!
+There's more data that we'll add ourselves later on, but when it comes to the API, that's all we need. So, can you find that information? Of course, if you would like to use more, feel free, but first make sure to do the minimum!
 
 ## Step 5: Handling State
 ### Check for understanding
@@ -223,7 +223,7 @@ What I recommend is that you do two things:
 - store your data in a central place
 - Write functions that allow you to CRUD with that data
 
-The reason for this is simple: if you ever change the underlying storage logic, you only have to change it in one place: the function definitions. To the outside world `getPokemon` will always do what it did, but under the hood you could go from in-memory, to localStorage, to even using your own DB and API!
+The reason for this is simple: if you ever change the underlying storage logic, you only have to change it in one place: the function definitions. To the outside world `getPokemon` will always do what it did, but under the hood you could go from in-memory closure, to localStorage, to even using your own DB and API!
 
 Anyway, here's what I recommend you do:
 - Store
@@ -284,7 +284,7 @@ As for sections and some `aria` info, check out this [Kevin Powell video on sect
 - Do you know how to use `element.innerHTML`?
 - Do you know how to set some attributes of elements *without* using `element.setAttribute`?
 - Can you use `map or forEach` to add a list of elements to the DOM?
-- Can you use ul/li tags to create a list of elements?
+- Can you use `ul/li` tags to create a list of elements?
 
 This is the first time we're going to use JS to render something to the page. We're going to start with the default pokemon, "Bulbasaur." So, can you write a function that takes in a pokemon object from state and renders it to the page? This section only uses safe API data, so you can use a template and innerHTML to render it. Or use `createElement` that's fine too!
 
@@ -311,7 +311,7 @@ You could! And in more advanced frameworks like React, you would add an `onclick
 - Do you know how to use `event.target` to get the form that was submitted?
 
 We have our little pokemon loaded up and we can change their look, now you just have to use the fetching form to alter the pokemon. You must do 3 things:
-- parse the form data
+- Parse the form data
 - Make the fetch
 - Render the new data
 
@@ -334,9 +334,3 @@ A single word of caution: do not use innerHTML. That's because you're taking use
 - Do you know how to remove the default styles of lists?
 
 Once you get all the core functionality done, add some styling! As you can see from the gif, we have applied *very* minimal styles to our page. Do you know how to add that bare minimum? And then, can you style this page so that it actually looks nice?
-
-
-
-
-
-
