@@ -43,6 +43,7 @@ In total, it takes *about* 100 lines of JS and 60 lines of html/css to complete 
 
 # Site Demo
 Here's a look at the finished site, in a gif! (We couldn't link you to the site itself because then you'd be able to copy it, and that's cheating!)
+
 ![https://giphy.com/gifs/iZycfVZDEqUPUIsdC6](https://media.giphy.com/media/iZycfVZDEqUPUIsdC6/giphy.gif)
 
 Here's the basic site view:
