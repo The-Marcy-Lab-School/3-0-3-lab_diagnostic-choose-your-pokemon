@@ -1,4 +1,4 @@
-# Poke Viewer!
+# Lab 3.0.3 - Poke Viewer!
 - [Poke Viewer!](#poke-viewer)
 - [Project overview](#project-overview)
 - [Site Demo](#site-demo)
@@ -72,13 +72,18 @@ Hey, no problem. Sometimes we have to work on topics and projects we don't care 
 
 
 ## User Stories
-- A user is greeted to the "Bulbasaur" pokemon already loaded
-- A user can select a pokemon's ID and fetch the data
+- A user is greeted by a page that looks exactly (or better styled) that the first example picture
+- A user is greeted to the "Bulbasaur" pokemon already fetched and loaded
+- A user can select a new pokemon's ID and fetch the data
 - **A user can only enter a number from 1-151**
 - A user can see the pokemon's name and first 4 moves (or fewer if the pokemon doesn't have that many)
 - A user can view the "Official Artwork," "Front Sprite," and "Back Sprite" of the pokemon
-- A user can give their pokemon a nickname, an `S, A, B,` or `C` tier rating, and check a box if the sprite is cool
-- The information will be displayed underneath the pokemon's information
+  - Use these sprites specifically! That's part of the challenge!
+- A user can customize their pokemon with: 
+  - a nickname
+  - an `S, A, B,` or `C` tier rating
+  - a checked box if the sprite is cool
+- A user can see the customized information displayed underneath the pokemon's information
 - After a user submits the "personalized" data, the form will completely clear
   - Honestly, clearing's not a great design choice in this case, but this is a practice lab, so we want to see if you *can* clear out a form
 - When a user loads a new pokemon, all the personalized data will disappear
@@ -155,8 +160,6 @@ You can also link a file in the head, but you need to add the `defer` attribute 
   <!-- Rest of head tag -->
 ```
 
-By default, use this one. It's the easiest to understand.
-
 ### Head with type="module"
 You can also link a file in the head, but you need to add the `type="module"` attribute to the script tag:
 
@@ -168,7 +171,7 @@ You can also link a file in the head, but you need to add the `type="module"` at
 
 This is very powerful, but it has one drawback: you must serve your files with a server. Do you know how to do that in [VSCode with live server plugin](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)?
 
-OK, so like I said, if you don't know what the differences are and why it matters *how* you load your JS, look it up! But if you just want to get going, default to option 2 (defer).
+OK, so like I said, if you don't know what the differences are and why it matters *how* you load your JS, look it up! But since you know how to use Vite, that's probably the way you should build out your projects from now on! It uses modules and also takes care of the server requirement by running a Dev Server for you!
 
 ## Step 3: Fetch the data
 ### Check for understanding
@@ -221,16 +224,16 @@ There's more data that we'll add ourselves later on, but when it comes to the AP
 It's advantageous to store your data in a "data layer" that's separate from your rendering logic. This is a common pattern in React, but it's also a good pattern in vanilla JS (really, everything). If this is totally unfamiliar to you, here's an [explanation of data layers using tic tac toe](https://medium.com/geekculture/understanding-data-layers-without-using-databases-eaa1148ccd8b?sk=531f92e654325b9202cab4a7f8078fbf).
 
 What I recommend is that you do two things:
-- store your data in a central place
+- store your data behind functions
 - Write functions that allow you to CRUD with that data
 
-The reason for this is simple: if you ever change the underlying storage logic, you only have to change it in one place: the function definitions. To the outside world `getPokemon` will always do what it did, but under the hood you could go from in-memory closure, to localStorage, to even using your own DB and API!
+The reason for this is simple: if you ever change the underlying storage logic, you only have to change it in one place: the function definitions. To the outside world `getPokemon` will always do what it did, but under the hood you could go from in-memory variable, to localStorage, to even using your own DB and API!
 
 Anyway, here's what I recommend you do:
 - Store
-  - An object/array whatever, that stores your main shared state in a single place. It could be `localStorage`, but it absolutely does not have to be!
+  - An object/array whatever, that stores your main shared state in a single place. It could be `localStorage`, but it could also just be an internal variable
 - getCurrentPokemon
-  - Returns the current pokemon object
+  - Returns the current pokemon object from the store
 - setCurrentPokemon
   - Takes in an object, cleans it up, and sets it as the current pokemon
 - personalizeCurrentPokemon
@@ -263,7 +266,7 @@ Now note, what's important here is **these** functions don't *render* a thing!! 
 
 Now that we have our data good to go, it's time to start worrying about how we're going to display all this to the user. A good place to start is just setting up the skeleton of the site.
 
-To keep this project simpler, it's ok not to use js render functions to set up the static portions of our page. You can just write out the basic tags you need in the `index.html` page.
+To keep this project simpler (and frankly less tedious), it's ok not to use JS render functions to set up the static portions of our page. You can just write out the basic tags you need in the `index.html` page.
 
 The 4 main parts of the site are:
 - The fetching form
@@ -301,7 +304,7 @@ This is the first time we're going to use JS to render something to the page. We
 Here's where you can have a *really* simple event handler if you know how to delegate and use data attributes with each button. Think about what information would be helpful if it was stored *directly* on the button. Perhaps a property name?
 
 ## Why not add an onclick attribute?
-You could! And in more advanced frameworks like React, you would add an `onclick` attribute to the button. But in vanilla JS, it's better to use event delegation. The reason why is it's usually cleaner. Without a templating language it can get obnoxious to add a bunch of `onclick` attributes to your HTML. However, there is still a time and place for `onclick`s when things like cleanup and removing nodes comes into play.
+You could! And in more advanced frameworks like React, you would add an `onclick` attribute to the button. But in vanilla JS, it's better to use event delegation. The reason why is it's usually cleaner. Without a templating language it can get obnoxious to add and manage a bunch of `onclick` attributes to your HTML. However, there is still a time and place for `onclick`s when things like cleanup and removing nodes comes into play.
 
 ## Step 9: Fetching the new pokemon
 ### Check for understanding
@@ -327,6 +330,12 @@ That's pretty much the patterns for fetching forms like this.
 This is really just stuff you've done before! The only complicated part is that our form has more, and more complex, inputs. Once you get the data, you just need to render it out onto the page. Remember, every time you load a new pokemon, the personalized data should disappear!
 
 A single word of caution: do not use innerHTML. That's because you're taking user entered data now, and we don't want to accidentally enter malicious data into our DOM. Use `createElement` and `appendChild` to add the data to the DOM.
+
+## Step BONUS: Maintaining personalized information
+## Check for undestanding
+- How could you save an associate the customized data to the pokemon?
+
+By default, any customized data gets blown away with a new pokemon loading. But what if it didn't? So if you customize your Bulbasaur, fetch a new pokemon, and then **fetch bulbasaur again** the customized data would appear! 
 
 ## Step BONUS: Styling
 ### Check for understanding
